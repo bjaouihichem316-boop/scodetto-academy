@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO & Brand Metadata -->
+  <title>Scodetto Academy | La Marsa, Tunis | Académie de Football / أكاديمية كرة القدم</title>
+  <meta name="description" content="Académie de football premium pour garçons à La Marsa, Tunis. Entraînement d'élite, statistiques de performance FIFA et suivi personnalisé. / أكاديمية كرة قدم ممتازة للفتيان بالمرسى، تونس.">
+  <meta name="keywords" content="football academy la marsa, soccer training tunis, elite youth soccer tunisia, scodetto academy, mohamed, monta, المرسى تونس, أكاديمية كرة قدم">
+  <meta name="theme-color" content="#0A2540">
+  <!-- Inline SVG favicon — eliminates favicon.ico 404 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFF099'/%3E%3Cstop offset='50%25' stop-color='%23D4AF37'/%3E%3Cstop offset='100%25' stop-color='%23AA7C11'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='%230A2540' rx='12'/%3E%3Cpath d='M32,14 L40,24 L50,10 L60,24 L68,14 L62,30 L38,30 Z' fill='url(%23g)'/%3E%3Cpath d='M50,27 L80,38 C80,67 50,92 50,92 C50,92 20,67 20,38 Z' fill='%230A2540' stroke='url(%23g)' stroke-width='3'/%3E%3Cpath d='M50,34 L72,43 C72,62 50,80 50,80 C50,80 28,62 28,43 Z' fill='none' stroke='%23D61A22' stroke-width='1.5'/%3E%3Cpolygon points='50,47 53,55 62,55 55,60 57,69 50,63 43,69 45,60 38,55 47,55' fill='url(%23g)'/%3E%3C/svg%3E">
+  
+  <!-- Google Fonts for Luxury and Modern Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="dark-theme">
+  
+  <!-- Sleek premium connected-node canvas background grid -->
+  <canvas id="premium-bg-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-3;pointer-events:none;opacity:0.25;"></canvas>
+
+  <!-- Modern Geometric Tunisian Line-Art Canvas Overlay (pure CSS/SVG vector grid) -->
+  <div class="tunisian-pattern-overlay"></div>
+  
+  <!-- Ambient Premium Glow Backdrops -->
+  <div class="ambient-glow glow-primary"></div>
+  <div class="ambient-glow glow-accent"></div>
+  
+  <!-- Main Application Wrapper -->
+  <div class="app-container">
+    
+    <!-- Premium Sticky Glassmorphic Navbar -->
+    <header class="main-header" id="nav-header">
+      <div class="header-content">
+        <a href="#home" class="brand-logo-link" id="brand-logo">
+          <img src="./assets/logo_official.jpg" alt="Scodetto Academy – Logo Officiel" class="nav-logo-img" />
+          <span class="brand-name">SCODETTO<span class="accent-text">ACADEMY</span></span>
+        </a>
+        
+        <!-- Navigation Menu (Bilingual) -->
+        <nav class="main-nav" aria-label="Primary Navigation">
+          <ul class="nav-menu">
+            <li><a href="#home" class="nav-link active" id="link-home">Accueil / الرئيسية</a></li>
+            <li><a href="#philosophy" class="nav-link" id="link-philosophy">Philosophie / فلسفتنا</a></li>
+            <li><a href="#coaches" class="nav-link" id="link-coaches">Entraîneurs / المدربون</a></li>
+          </ul>
+        </nav>
+        
+        <!-- Portal Access Controls -->
+        <div class="nav-actions">
+          <!-- Unauthenticated actions -->
+          <div class="auth-buttons-container" id="guest-nav-actions">
+            <button class="btn btn-outline" id="btn-open-login">
+              <span class="btn-text">Portails / البوابات</span>
+              <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Authenticated user info dropdown (Initially Hidden) -->
+          <div class="auth-user-dropdown hidden" id="user-nav-actions">
+            <div class="user-profile-badge">
+              <span class="user-role-badge" id="nav-user-role">Parent</span>
+              <span class="user-name-text" id="nav-user-name">Invité</span>
+            </div>
+            <button class="btn btn-sm btn-accent-red" id="btn-logout" title="Se déconnecter / خروج">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Viewport for dynamic routing -->
+    <main class="viewport-wrapper" id="app-viewport">
+      <!-- Dynamic components load here -->
+      <div class="loading-spinner-container">
+        <div class="loading-spinner"></div>
+      </div>
+    </main>
+    
+    <!-- Footer Section (Bilingual) -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>&copy; 2026 Scodetto Academy - La Marsa, Tunis. Tous droits réservés / جميع الحقوق محفوظة. Powered by Antigravity ESM.</p>
+        <div class="footer-links">
+          <a href="#home">Accueil / الرئيسية</a>
+          <a href="#philosophy">Philosophie / فلسفتنا</a>
+          <a href="#coaches">Entraîneurs / المدربون</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- Auth Modal — 4-Digit PIN Flow (3 steps) -->
+  <dialog id="auth-modal" class="glass-dialog">
+    <div class="dialog-wrapper">
+
+      <!-- Shared close button -->
+      <button class="dialog-close-btn" id="btn-close-login" aria-label="Fermer / إغلاق">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Shared header logo -->
+      <div class="dialog-header">
+        <img src="./assets/logo_official.jpg" alt="Scodetto" class="dialog-logo-img" />
+        <h2 class="dialog-title">Accès Sécurisé / دخول آمن</h2>
+      </div>
+
+      <!-- ══ STEP 1: Portal type ══ -->
+      <div id="auth-step-portal">
+        <p class="dialog-subtitle">Sélectionnez votre portail / اختر البوابة المخصصة لك</p>
+        <div class="login-options-grid">
+
+          <button class="login-card-btn parent-card" id="btn-login-parent">
+            <div class="card-icon-container">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="card-meta">
+              <h3>Portail Parent / بوابة الأولياء</h3>
+              <p>Suivez les performances, alertes et le planning de votre fils.<br>تابع أداء ومواعيد وتنبيهات ابنك.</p>
+            </div>
+            <span class="card-action-hint">Accéder &rarr;</span>
+          </button>
+
+          <button class="login-card-btn admin-card" id="btn-login-admin">
+            <div class="card-icon-container">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div class="card-meta">
+              <h3>Portail Entraîneur / بوابة المدربين</h3>
+              <p>Gérer les joueurs, alertes parents et contenus publics.<br>إدارة اللاعبين، تنبيهات الأولياء والمحتوى العام.</p>
+            </div>
+            <span class="card-action-hint">Accéder &rarr;</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ══ STEP 2A: Parent — child selector ══ -->
+      <div id="auth-step-parent" style="display:none;">
+        <button id="btn-parent-back" class="modal-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Retour / رجوع
+        </button>
+        <p class="dialog-subtitle">Sélectionnez votre fils / اختر ابنك</p>
+        <div id="parent-child-list" class="child-selector-list">
+          <!-- Populated dynamically by AuthModal.js -->
+        </div>
+      </div>
+
+      <!-- ══ STEP 2B: Coach — identity picker ══ -->
+      <div id="auth-step-coach" style="display:none;">
+        <button id="btn-coach-back" class="modal-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Retour / رجوع
+        </button>
+        <p class="dialog-subtitle">Choisir le profil coach / اختر ملف المدرب</p>
+        <div class="login-options-grid">
+
+          <button class="login-card-btn admin-card" id="btn-login-coach-mohamed">
+            <div class="card-icon-container" style="position:relative;">
+              <svg width="40" height="40" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="48" fill="#0A2540" stroke="#D4AF37" stroke-width="4"/>
+                <path d="M50,18 C57,18 63,24 63,31 C63,38 57,44 50,44 C43,44 37,38 37,31 C37,24 43,18 50,18 Z" fill="#D4AF37"/>
+                <path d="M22,80 C22,63 34,54 50,54 C66,54 78,63 78,80 Z" fill="#1a3358"/>
+                <rect x="40" y="56" width="20" height="16" rx="2" fill="#D4AF37" opacity="0.8"/>
+                <line x1="44" y1="61" x2="56" y2="61" stroke="#0A2540" stroke-width="1.5"/>
+                <line x1="44" y1="65" x2="56" y2="65" stroke="#0A2540" stroke-width="1.5"/>
+              </svg>
+              <span class="coach-rating-badge gold-badge">92</span>
+            </div>
+            <div class="card-meta">
+              <h3>Coach Mohamed / المدرب محمد</h3>
+              <p>Directeur Technique &bull; CAF A<br><span style="color:var(--color-accent-gold);font-size:0.75rem;">المدير الفني — PIN: 0000</span></p>
+            </div>
+            <span class="card-action-hint">PIN &rarr;</span>
+          </button>
+
+          <button class="login-card-btn" id="btn-login-coach-monta" style="border-color:rgba(214,26,34,0.35);">
+            <div class="card-icon-container" style="position:relative;">
+              <svg width="40" height="40" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="48" fill="#0A2540" stroke="#D61A22" stroke-width="4"/>
+                <path d="M50,18 C57,18 63,24 63,31 C63,38 57,44 50,44 C43,44 37,38 37,31 C37,24 43,18 50,18 Z" fill="#D61A22"/>
+                <path d="M22,80 C22,63 34,54 50,54 C66,54 78,63 78,80 Z" fill="#1a3358"/>
+                <polygon points="55,55 44,68 51,68 45,82 63,66 55,66 62,55" fill="#D61A22" opacity="0.9"/>
+              </svg>
+              <span class="coach-rating-badge red-badge">88</span>
+            </div>
+            <div class="card-meta">
+              <h3>Coach Monta / المدرب مونتة</h3>
+              <p>Préparateur Physique &bull; CAF B<br><span style="color:var(--color-accent-red);font-size:0.75rem;">المعد البدني — PIN: 1111</span></p>
+            </div>
+            <span class="card-action-hint" style="color:var(--color-accent-red);">PIN &rarr;</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ══ STEP 3: Shared 4-Digit PIN Pad ══ -->
+      <div id="auth-step-pin" style="display:none;">
+        <button id="btn-pin-back" class="modal-back-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Retour / رجوع
+        </button>
+
+        <p class="dialog-subtitle" id="pin-step-label">Entrez votre code PIN / أدخل رمز PIN</p>
+
+        <!-- 4 visual PIN dots -->
+        <div class="pin-dots-row" role="group" aria-label="PIN code input">
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+          <span class="pin-dot" aria-hidden="true"></span>
+        </div>
+
+        <p class="pin-error-msg" id="pin-error-msg" role="alert"></p>
+
+        <!-- Number pad grid -->
+        <div class="pin-pad-grid">
+          <button class="pin-key" data-digit="1">1</button>
+          <button class="pin-key" data-digit="2">2</button>
+          <button class="pin-key" data-digit="3">3</button>
+          <button class="pin-key" data-digit="4">4</button>
+          <button class="pin-key" data-digit="5">5</button>
+          <button class="pin-key" data-digit="6">6</button>
+          <button class="pin-key" data-digit="7">7</button>
+          <button class="pin-key" data-digit="8">8</button>
+          <button class="pin-key" data-digit="9">9</button>
+          <button class="pin-key pin-key-del" aria-label="Supprimer / حذف">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+              <line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/>
+            </svg>
+          </button>
+          <button class="pin-key" data-digit="0">0</button>
+          <button class="pin-key pin-key-ok" id="btn-pin-submit" disabled>OK</button>
+        </div>
+      </div>
+
+    </div>
+  </dialog>
+  
+  <!-- System Toast Notifications Container -->
+  <div class="toast-notifications-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Celebration Overlay for Confetti Particles -->
+  <div id="celebration-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;"></div>
+
+  <!-- Javascript Entry Point Module -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

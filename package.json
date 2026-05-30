@@ -1,0 +1,13 @@
+{
+  "name": "scodetto-academy",
+  "version": "1.0.0",
+  "description": "Scodetto Academy - Elite Football Academy Management System / أكاديمية سكوديتو لكرة القدم",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "build": "echo 'Static site - no build required'"
+  },
+  "keywords": ["football", "academy", "tunisia", "scodetto"],
+  "license": "MIT"
+}
