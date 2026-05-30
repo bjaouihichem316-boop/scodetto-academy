@@ -4,6 +4,8 @@
 
 import { navigateTo } from '../lib/router.js';
 import { showToast } from '../lib/notifications.js';
+import { fbLogin, isFbReady } from '../lib/facebook.js';
+import { loginWithFacebook } from '../lib/auth.js';
 
 export function renderParentPortal(container, dbState) {
   
@@ -233,8 +235,10 @@ export function renderParentPortal(container, dbState) {
         <div class="child-profile-selector" id="profiles-tabs">
           ${dynamicTabsHTML}
         </div>
-      </div>
+        <!-- Facebook Sync Status -->
+        <div id="fb-sync-status" style="margin-top:8px;"></div>
       
+      </div>
       <!-- Grid Columns -->
       <div class="portal-grid-two-cols">
         
@@ -410,6 +414,54 @@ export function renderParentPortal(container, dbState) {
     });
   };
 
+
+  // ── Facebook Sync Status ─────────────────────────────────────────────────
+  const renderFbSyncStatus = () => {
+    const parentName = dbState.user?.name;
+    const parents = dbState.parents || [];
+    const parentData = parents.find(p => p.parentName === parentName);
+    const isLinked = parentData?.facebookId != null;
+    
+    const statusEl = container.querySelector('#fb-sync-status');
+    if (!statusEl) return;
+    
+    if (isLinked) {
+      statusEl.innerHTML = `
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.15);border-radius:20px;font-size:0.75rem;font-weight:600;color:#1877F2;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <span>Facebook Connecté / متصل ✅</span>
+        </div>
+      `;
+    } else if (isFbReady()) {
+      statusEl.innerHTML = `
+        <button id="btn-fb-link" style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(24,119,242,0.08);border:1px solid rgba(24,119,242,0.15);border-radius:20px;font-size:0.75rem;font-weight:600;color:#1877F2;cursor:pointer;transition:all 0.2s ease;font-family:inherit;border:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1877F2">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+          <span>Lier mon compte Facebook / ربط حساب فيسبوك</span>
+        </button>
+      `;
+      statusEl.querySelector('#btn-fb-link')?.addEventListener('click', async () => {
+        try {
+          const fbData = await fbLogin();
+          const result = loginWithFacebook(fbData);
+          if (result.success) {
+            showToast('Compte Facebook lié ✅ / تم ربط الحساب');
+            renderFbSyncStatus();
+          }
+        } catch (err) {
+          showToast(err.message || 'Erreur de connexion / خطأ في الاتصال', true);
+        }
+      });
+    } else {
+      // FB SDK not ready — show nothing (App ID probably not configured)
+      statusEl.innerHTML = '';
+    }
+  };
+
+  renderFbSyncStatus();
   renderAlertFeed();
 
   // Live re-render when coach pushes a new alert

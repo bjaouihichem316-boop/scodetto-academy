@@ -17,6 +17,7 @@ import { initPremiumBgCanvas } from './lib/canvas.js';
 import { showToast } from './lib/notifications.js';
 import { playWhistleSound, playCrowdCheerSound, triggerConfettiCelebration } from './lib/audio.js';
 import { loginUser, logoutUser, pushParentAlert, setToast as setAuthToast, setAudioFns } from './lib/auth.js';
+import { initFacebookSdk } from './lib/facebook.js';
 
 // Re-exports for backward compatibility (components will import directly in future)
 export { state };
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize persistence (hydrate state from localStorage before first render)
   initPersistence();
 
+  initFacebookSdk(); // Async — tries to load FB SDK; gracefully skips if no App ID configured
   // Register toast + audio functions for router and auth (avoids circular dependencies)
   setRouterToast(showToast);
   setAuthToast(showToast);

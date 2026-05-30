@@ -8,7 +8,8 @@
 
 import { state } from '../state.js';
 import { showToast } from '../lib/notifications.js';
-import { loginUser, validatePin } from '../lib/auth.js';
+import { loginUser, validatePin, loginWithFacebook } from '../lib/auth.js';
+import { fbLogin, isFbReady } from '../lib/facebook.js';
 
 export function initAuthModal() {
   const modal = document.getElementById('auth-modal');
@@ -72,6 +73,71 @@ export function initAuthModal() {
   modal.querySelector('#btn-login-admin')?.addEventListener('click', () => {
     pendingRole = 'admin';
     showStep('auth-step-coach');
+  });
+
+  // ── Facebook Login Button (alternative to PIN) ──────────────────────────
+  const portalStep = modal.querySelector('#auth-step-portal');
+  
+  // Create and inject FB login section into portal step
+  const fbSection = document.createElement('div');
+  fbSection.className = 'fb-login-section';
+  fbSection.style.cssText = 'margin-top:16px;text-align:center;';
+  fbSection.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+      <span style="flex:1;height:1px;background:var(--glass-border);"></span>
+      <span style="font-size:0.75rem;color:var(--color-text-muted);font-weight:600;">OU / أو</span>
+      <span style="flex:1;height:1px;background:var(--glass-border);"></span>
+    </div>
+    <button class="fb-login-btn" id="btn-fb-login" style="display:none;align-items:center;justify-content:center;gap:10px;padding:12px 24px;border-radius:30px;border:none;background:#1877F2;color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.2s ease;width:100%;max-width:360px;margin:0 auto;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+      <span>Connect with Facebook / تسجيل الدخول عبر فيسبوك</span>
+    </button>
+    <p id="fb-login-error" style="font-size:0.75rem;color:#ef4444;margin-top:8px;min-height:20px;"></p>
+  `;
+  portalStep.appendChild(fbSection);
+
+  const fbBtn = fbSection.querySelector('#btn-fb-login');
+
+  // Check FB readiness immediately and show button if ready
+  if (isFbReady()) {
+    fbBtn.style.display = 'flex';
+  } else {
+    // Retry up to 5 seconds (SDK might still be loading)
+    let retries = 0;
+    const checkInterval = setInterval(() => {
+      retries++;
+      if (isFbReady()) {
+        fbBtn.style.display = 'flex';
+        clearInterval(checkInterval);
+      } else if (retries >= 10) {
+        clearInterval(checkInterval);
+      }
+    }, 500);
+  }
+
+  fbBtn.addEventListener('click', async () => {
+    const errEl = fbSection.querySelector('#fb-login-error');
+    errEl.textContent = '';
+    fbBtn.disabled = true;
+    fbBtn.style.opacity = '0.6';
+    
+    try {
+      const fbData = await fbLogin();
+      const result = loginWithFacebook(fbData);
+      
+      if (result.success) {
+        closeModal();
+      } else if (result.reason === 'no_match') {
+        errEl.textContent = 'Aucun parent trouvé. Connectez-vous par PIN. / لم يتم العثور على ولي أمر. سجل الدخول عبر الرمز.';
+      }
+    } catch (err) {
+      errEl.textContent = err.message || 'Erreur de connexion Facebook / خطأ في تسجيل الدخول عبر فيسبوك';
+    } finally {
+      fbBtn.disabled = false;
+      fbBtn.style.opacity = '1';
+    }
   });
 
   // ── STEP 2A: Build parent child-selector dynamically from roster ───────────

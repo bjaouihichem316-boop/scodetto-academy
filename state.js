@@ -7,6 +7,7 @@ import { defaultRoster } from './data/roster.js';
 import { defaultSchedule } from './data/schedule.js';
 import { defaultChildProfiles } from './data/profiles.js';
 import { defaultCoaches } from './data/coaches.js';
+import { defaultParents } from './data/parents.js';
 import { defaultNotifications } from './data/notifications.js';
 import {
   defaultWeeklyPerformer,
@@ -40,6 +41,7 @@ const privateState = {
   scheduler: [...defaultSchedule],
   childProfiles: { ...defaultChildProfiles },
   coaches: [...defaultCoaches],
+  parents: [...defaultParents],
   notifications: [...defaultNotifications],
   weeklyPerformer: { ...defaultWeeklyPerformer },
   legendRecords: [...defaultLegendRecords],
@@ -125,7 +127,15 @@ export const state = {
     privateState.coaches = val;
     notify('coaches', val);
   },
-  
+
+  get parents() {
+    return privateState.parents;
+  },
+  set parents(val) {
+    privateState.parents = val;
+    notify('parents', val);
+  },
+
   get notifications() {
     return privateState.notifications;
   },
